@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premio Personalizzato</title>
     <style>
+        /* Stili di base per il corpo della pagina */
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
             background-color: #f0f0f0;
             text-align: center;
         }
+
+        /* Stili per gli input e i pulsanti */
         input, button {
             padding: 10px;
             margin: 10px;
@@ -18,81 +21,79 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
+        /* Effetto hover sui pulsanti */
         button:hover {
             background-color: #4CAF50;
             color: white;
         }
+
+        /* Stile per il titolo */
         h1 {
             color: #333;
         }
-        #risultato {
-            font-weight: bold;
-        }
+
+        /* Stile per il messaggio di errore */
         .error {
             color: red;
         }
     </style>
 </head>
 <body>
+
+    <!-- Titolo principale -->
     <h1>Benvenuto!</h1>
+
+    <!-- Input per inserire il nome -->
     <p>Come ti chiami?</p>
     <input type="text" id="nome" placeholder="Inserisci il tuo nome" maxlength="30">
     
+    <!-- Input per inserire il premio desiderato -->
     <p>Cosa vorresti vincere?</p>
     <input type="text" id="premio" placeholder="Inserisci cosa vuoi" maxlength="50">
     
+    <!-- Pulsanti per generare il premio o resettare il form -->
     <button onclick="generarePremio()">Genera il tuo premio</button>
     <button onclick="resettaCampi()">Resetta</button>
 
+    <!-- Paragrafi per mostrare il risultato e gli eventuali errori -->
     <p id="risultato"></p>
     <p id="errore" class="error"></p>
 
     <script>
+        /* Funzione per generare il premio personalizzato */
         function generarePremio() {
-            var nome = document.getElementById("nome").value.trim();
-            var premio = document.getElementById("premio").value.trim();
+            // Otteniamo i valori dagli input
+            var nome = document.getElementById("nome").value;
+            var premio = document.getElementById("premio").value;
             var errore = document.getElementById("errore");
             
+            // Rimuove eventuali messaggi di errore precedenti
             errore.innerHTML = '';
 
+            // Controlla se i campi sono vuoti
             if (!nome || !premio) {
                 errore.innerHTML = "Per favore, inserisci sia il tuo nome che il premio!";
-                return;
+                return; // Esce dalla funzione se manca qualche valore
             }
 
+            // Verifica che il nome contenga solo lettere e spazi
             if (!/^[a-zA-ZàèìòùÀÈÌÒÙ\s]+$/.test(nome)) {
                 errore.innerHTML = "Il nome deve contenere solo lettere!";
                 return;
             }
 
-            if (!/^[a-zA-Z0-9àèìòùÀÈÌÒÙ\s]+$/.test(premio)) {
-                errore.innerHTML = "Il premio non può contenere caratteri speciali!";
-                return;
-            }
+            // Determina il genere dell'articolo in base all'ultima lettera del premio
+            var articolo = premio.endsWith("a") ? "una" : "un";
+            
+            // Crea un link dinamico basato sul premio scelto
+            var link = `https://www.haivinto${articolo.charAt(0).toUpperCase() + articolo.slice(1)}${premio}.com`;
 
-            var articolo = determinaArticolo(premio);
-
-            var link = `https://www.haivinto-premio.com?nome=${encodeURIComponent(nome)}&premio=${encodeURIComponent(premio)}`;
-
+            // Mostra il risultato con un messaggio personalizzato
             document.getElementById("risultato").innerHTML = `${nome}, hai vinto ${articolo} ${premio}! Vai su <a href="${link}" target="_blank">${link}</a> per ricevere il premio.`;
         }
 
-        function determinaArticolo(parola) {
-            let vocali = ["a", "e", "i", "o", "u"];
-            let maschili = ["cane", "gelato", "telefono", "robot"];
-            let femminili = ["auto", "pizza", "aquila", "casa"];
-
-            if (femminili.includes(parola.toLowerCase()) || parola.endsWith("a")) {
-                return "una";
-            } else if (maschili.includes(parola.toLowerCase()) || parola.endsWith("o")) {
-                return "un";
-            } else if (vocali.includes(parola.charAt(0).toLowerCase())) {
-                return "un’";
-            } else {
-                return "un";
-            }
-        }
-
+        /* Funzione per resettare i campi del modulo */
         function resettaCampi() {
             document.getElementById("nome").value = '';
             document.getElementById("premio").value = '';
@@ -100,5 +101,8 @@
             document.getElementById("errore").innerHTML = '';
         }
     </script>
+
 </body>
 </html>
+
+
