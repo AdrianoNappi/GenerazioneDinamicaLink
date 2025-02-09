@@ -105,9 +105,6 @@
 </body>
 </html>
 
-git checkout GenerazioneDinamicaLink
-git add .
-git commit -m "Aggiornato il contenuto per GenerazioneDinamicaLink"
-git push origin GenerazioneDinamicaLink
+
 
 
