@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premio Personalizzato</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+        h1 {
+            color: #333;
+        }
+        #risultato {
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Benvenuto!</h1>
+    <p>Come ti chiami?</p>
+    <input type="text" id="nome" placeholder="Inserisci il tuo nome" maxlength="30">
+    
+    <p>Cosa vorresti vincere?</p>
+    <input type="text" id="premio" placeholder="Inserisci cosa vuoi" maxlength="50">
+    
+    <button onclick="generarePremio()">Genera il tuo premio</button>
+    <button onclick="resettaCampi()">Resetta</button>
+
+    <p id="risultato"></p>
+    <p id="errore" class="error"></p>
+
+    <script>
+        function generarePremio() {
+            var nome = document.getElementById("nome").value.trim();
+            var premio = document.getElementById("premio").value.trim();
+            var errore = document.getElementById("errore");
+            
+            errore.innerHTML = '';
+
+            if (!nome || !premio) {
+                errore.innerHTML = "Per favore, inserisci sia il tuo nome che il premio!";
+                return;
+            }
+
+            if (!/^[a-zA-ZàèìòùÀÈÌÒÙ\s]+$/.test(nome)) {
+                errore.innerHTML = "Il nome deve contenere solo lettere!";
+                return;
+            }
+
+            if (!/^[a-zA-Z0-9àèìòùÀÈÌÒÙ\s]+$/.test(premio)) {
+                errore.innerHTML = "Il premio non può contenere caratteri speciali!";
+                return;
+            }
+
+            var articolo = determinaArticolo(premio);
+
+            var link = `https://www.haivinto-premio.com?nome=${encodeURIComponent(nome)}&premio=${encodeURIComponent(premio)}`;
+
+            document.getElementById("risultato").innerHTML = `${nome}, hai vinto ${articolo} ${premio}! Vai su <a href="${link}" target="_blank">${link}</a> per ricevere il premio.`;
+        }
+
+        function determinaArticolo(parola) {
+            let vocali = ["a", "e", "i", "o", "u"];
+            let maschili = ["cane", "gelato", "telefono", "robot"];
+            let femminili = ["auto", "pizza", "aquila", "casa"];
+
+            if (femminili.includes(parola.toLowerCase()) || parola.endsWith("a")) {
+                return "una";
+            } else if (maschili.includes(parola.toLowerCase()) || parola.endsWith("o")) {
+                return "un";
+            } else if (vocali.includes(parola.charAt(0).toLowerCase())) {
+                return "un’";
+            } else {
+                return "un";
+            }
+        }
+
+        function resettaCampi() {
+            document.getElementById("nome").value = '';
+            document.getElementById("premio").value = '';
+            document.getElementById("risultato").innerHTML = '';
+            document.getElementById("errore").innerHTML = '';
+        }
+    </script>
+</body>
+</html>
