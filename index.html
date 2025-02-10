@@ -72,7 +72,7 @@
 
             var articolo = determinaArticolo(premio);
 
-            var link = `https://www.haivinto-${encodeURIComponent(premio)}.com?nome=${encodeURIComponent(nome)}&premio=${encodeURIComponent(premio)}`;
+            var link = `https://www.sito-premio.com?nome=${encodeURIComponent(nome)}&premio=${encodeURIComponent(premio)}`;
 
             document.getElementById("risultato").innerHTML = `${nome}, hai vinto ${articolo} ${premio}! Vai su <a href="${link}" target="_blank">${link}</a> per ricevere ${premio}.`;
         }
