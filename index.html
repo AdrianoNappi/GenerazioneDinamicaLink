@@ -70,35 +70,4 @@
                 return;
             }
 
-            var articolo = determinaArticolo(premio);
 
-            var link = `https://www.sito-premio.com?nome=${encodeURIComponent(nome)}&premio=${encodeURIComponent(premio)}`;
-
-            document.getElementById("risultato").innerHTML = `${nome}, hai vinto ${articolo} ${premio}! Vai su <a href="${link}" target="_blank">${link}</a> per ricevere ${premio}.`;
-        }
-
-        function determinaArticolo(parola) {
-            let vocali = ["a", "e", "i", "o", "u"];
-            let maschili = ["cane", "gelato", "telefono", "robot"];
-            let femminili = ["auto", "pizza", "aquila", "casa"];
-
-            if (femminili.includes(parola.toLowerCase()) || parola.endsWith("a")) {
-                return "una";
-            } else if (maschili.includes(parola.toLowerCase()) || parola.endsWith("o")) {
-                return "un";
-            } else if (vocali.includes(parola.charAt(0).toLowerCase())) {
-                return "un’";
-            } else {
-                return "un";
-            }
-        }
-
-        function resettaCampi() {
-            document.getElementById("nome").value = '';
-            document.getElementById("premio").value = '';
-            document.getElementById("risultato").innerHTML = '';
-            document.getElementById("errore").innerHTML = '';
-        }
-    </script>
-</body>
-</html>
